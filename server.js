@@ -5,11 +5,18 @@ const app = express()
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandler from './middleware/error-handler.js'
 import connectDB from './db/connect.js'
+import authRouter from './routes/authRoutes'
+import jobRouter from './routes/jobRoutes'
+
+app.use(express.json())
 
 app.get('/', (req,res) => {
     //throw new Error('new error')
     res.send('welcome')
 })
+
+app.use('/api/v1/auth',authRouter)
+app.use('/api/v1/jobs',jobRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandler)
