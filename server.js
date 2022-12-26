@@ -5,8 +5,8 @@ const app = express()
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandler from './middleware/error-handler.js'
 import connectDB from './db/connect.js'
-import authRouter from './routes/authRoutes'
-import jobRouter from './routes/jobRoutes'
+import authRouter from './routes/authRoutes.js'
+import jobRouter from './routes/jobRoutes.js'
 
 app.use(express.json())
 
