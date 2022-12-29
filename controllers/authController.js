@@ -41,8 +41,23 @@ const loginUser = async (req,res) => {
     res.status(StatusCodes.OK).json({user,token,location:user.location})
 }
 
-const updateUser = (req,res) => {
-    res.send('update user')
+const updateUser = async (req,res) => {
+    const {name,email,lastName,location} = req.body
+    if(!name || !email || !lastName || !location){
+        throw new BadRequest('Please fill all the values')
+    }
+    const user = await User.findOne({_id:req.user.userId})
+    if(!user){
+        throw new BadRequest('Invalid ID')
+    }
+    user.name = name
+    user.email = email
+    user.location = location
+    user.lastName = lastName
+
+    const token = user.createJWT()
+    await user.save()
+    res.status(StatusCodes.OK).json({user,token,location:user.location})
 }
 
 export {registeruser,loginUser,updateUser}
